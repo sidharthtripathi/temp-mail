@@ -1,0 +1,11 @@
+{
+  "devDependencies": {
+    "@types/mailparser": "^3.4.4",
+    "@types/smtp-server": "^3.5.10",
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "mailparser": "^3.6.9",
+    "smtp-server": "^3.13.3"
+  }
+}
