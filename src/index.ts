@@ -10,7 +10,8 @@ const server = new SMTPServer({
             if(err) console.log(err);
             const email = {
                 FROM : mailParsed.from?.text,
-                TO : mailParsed.to,
+                // @ts-ignore
+                TO : mailParsed.to?.text,
                 BODY : mailParsed.text
             }
             console.log(email)
