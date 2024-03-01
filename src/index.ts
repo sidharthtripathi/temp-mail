@@ -11,6 +11,7 @@ const server = new SMTPServer({
                 TO : mailParsed.to,
                 BODY : mailParsed.text
             }
+            console.log(email)
             fs.readFile(path.join(__dirname,"..",'mailsDB.json')).then(content=>{
    
                 let mailsDB : {mails : typeof email[]} = (JSON.parse(content.toString()))
