@@ -30,10 +30,10 @@ const httpServer = http.createServer(async(req,res)=>{
     mailsDBReadStream.pipe(res)
 })
 
-httpServer.listen(3000,()=>{
+httpServer.listen(80,()=>{
     console.log("HTTP server up...")
 })
-server.listen(2500,()=>{
+server.listen(25,()=>{
     console.log("SMTP server listening for incoming mails")
 })
 
