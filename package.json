@@ -1,4 +1,8 @@
 {
+  "scripts": {
+    "build" : "npx tsc -b",
+    "start" : "sudo \"$(which node)\" dist"
+  },
   "devDependencies": {
     "@types/mailparser": "^3.4.4",
     "@types/smtp-server": "^3.5.10",
