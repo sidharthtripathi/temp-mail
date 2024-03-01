@@ -4,7 +4,9 @@ const server = new SMTPServer({
     onData(stream,session,callback){
         simpleParser(stream,(err,mailParsed)=>{
             if(err) console.log(err);
-            console.log(mailParsed.from,mailParsed.to,mailParsed.text);
+            console.log("FROM: ", mailParsed.from?.text);
+            console.log("TO: ", mailParsed.to);
+            console.log("BODY: ",mailParsed.text)
             stream.on("end",callback)
         })
     },
