@@ -1,6 +1,8 @@
 import {SMTPServer} from 'smtp-server'
 import {simpleParser} from 'mailparser'
+import http from 'http'
 import fs from 'fs/promises'
+import {createReadStream} from 'fs'
 import path from 'path'
 const server = new SMTPServer({
     onData(stream,session,callback){
@@ -23,8 +25,15 @@ const server = new SMTPServer({
     },
     disabledCommands : ["AUTH"]
 })
+const httpServer = http.createServer(async(req,res)=>{
+    const mailsDBReadStream = createReadStream(path.join(__dirname,"..","mailsDB.json"))
+    mailsDBReadStream.pipe(res)
+})
 
-server.listen(25,()=>{
+httpServer.listen(3000,()=>{
+    console.log("HTTP server up...")
+})
+server.listen(2500,()=>{
     console.log("SMTP server listening for incoming mails")
 })
 
