@@ -14,20 +14,17 @@ const server = new SMTPServer({
                 BODY : mailParsed.text
             }
             console.log(email)
-            fs.readFile(path.join(__dirname,"..",'mailsDB.json')).then(content=>{
-   
-                let mailsDB : {mails : typeof email[]} = (JSON.parse(content.toString()))
-                mailsDB.mails.push(email)
-                fs.writeFile(path.join(__dirname,"..","mailsDB.json"),JSON.stringify(mailsDB))
-            })
+            fs.writeFile(path.join(__dirname,"..","lastMail.json"),JSON.stringify(email))
+            
             stream.on("end",callback)
         })
     },
     disabledCommands : ["AUTH"]
 })
 const httpServer = http.createServer(async(req,res)=>{
-    const mailsDBReadStream = createReadStream(path.join(__dirname,"..","mailsDB.json"))
+    const mailsDBReadStream = createReadStream(path.join(__dirname,"..","lastMail.json"))
     mailsDBReadStream.pipe(res)
+    
 })
 
 httpServer.listen(80,()=>{
