@@ -1,9 +1,7 @@
 import {SMTPServer} from 'smtp-server'
 import {simpleParser} from 'mailparser'
 import http from 'http'
-import fs from 'fs/promises'
-import {createReadStream} from 'fs'
-import path from 'path'
+let lastMail = {}
 const server = new SMTPServer({
     onData(stream,session,callback){
         simpleParser(stream,(err,mailParsed)=>{
@@ -15,16 +13,14 @@ const server = new SMTPServer({
                 BODY : mailParsed.text
             }
             console.log(email)
-            fs.writeFile(path.join(__dirname,"..","lastMail.json"),JSON.stringify(email))
-            
+            lastMail = email
             stream.on("end",callback)
         })
     },
     disabledCommands : ["AUTH"]
 })
 const httpServer = http.createServer(async(req,res)=>{
-    const mailsDBReadStream = createReadStream(path.join(__dirname,"..","lastMail.json"))
-    mailsDBReadStream.pipe(res)
+    res.end(JSON.stringify(lastMail))
     
 })
 
