@@ -17,7 +17,17 @@ const server = new SMTPServer({
             stream.on("end",callback)
         })
     },
-    disabledCommands : ["AUTH"]
+    onConnect(session, callback) {
+        callback()
+    },
+    onMailFrom(address, session, callback) {
+        callback()
+    },
+    onRcptTo(address, session, callback) {
+        callback()
+    },
+    allowInsecureAuth : true,
+    authOptional : true
 })
 const httpServer = http.createServer(async(req,res)=>{
     res.end(JSON.stringify(lastMail))
